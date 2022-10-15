@@ -1,0 +1,12 @@
+node_modules
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.txt
+*.psd
+*.URL
+*.exe
+*.xlsx
+template.json
+dist
