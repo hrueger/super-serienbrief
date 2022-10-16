@@ -24,8 +24,8 @@ import readXlsxFile from 'read-excel-file/node'
         .map(row => {
         const input: Record<string, any> = {...textFiles};
         for (let i = 0; i < header.length; i++) {
-            const h = (header[i] || "").toString();
-            const r = (row[i] || "").toString();
+            const h = (header[i] ?? "").toString();
+            const r = (row[i] ?? "").toString();
             input[h] = template.schemas[0][h]?.type === 'image' && imageFiles[r] ? imageFiles[r] : r;
         }
         return input;
