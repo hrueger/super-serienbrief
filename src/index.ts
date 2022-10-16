@@ -17,11 +17,16 @@ import readXlsxFile from 'read-excel-file/node'
     ])));
 
     const header = rows.shift()!;
+    const skipIndex = header.indexOf("_skip");
 
-    const inputs = rows.map(row => {
-        const input: Record<string, any> = {};
+    const inputs = rows
+        .filter((row) => skipIndex === -1 || !row[skipIndex])
+        .map(row => {
+        const input: Record<string, any> = {...textFiles};
         for (let i = 0; i < header.length; i++) {
-            input[header[i].toString()] = template.schemas[0][header[i].toString()]?.type === 'image' && imageFiles[row[i].toString()] ? imageFiles[row[i].toString()] : textFiles[row[i].toString()] ?? row[i].toString();
+            const h = (header[i] || "").toString();
+            const r = (row[i] || "").toString();
+            input[h] = template.schemas[0][h]?.type === 'image' && imageFiles[r] ? imageFiles[r] : r;
         }
         return input;
     });
